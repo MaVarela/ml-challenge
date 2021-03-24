@@ -1,0 +1,206 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "API Mercado Libre",
+    "description": "API de consulta de productos de Mercado Libre"
+  },
+  "paths": {
+    "/api/items": {
+      "get": {
+        "tags": ["Lista de productos"],
+        "description": "Retorna un listado de productos",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Productos obtenidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "author": {"$ref": "#/components/schemas/author"},
+                    "categories" : {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "items": {"$ref": "#/components/schemas/item"}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "example": {
+                  "message": "Mensaje de error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{id}": {
+      "get": {
+        "tags": ["Detalle de producto"],
+        "description": "Retorna el detalle de un producto",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalle del producto obtenido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "author": {"$ref": "#/components/schemas/author"},
+                    "item": {"$ref": "#/components/schemas/itemDetail"}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "example": {
+                  "message": "Mensaje de error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "id": {
+        "type": "string",
+        "description": "Identificador de producto",
+        "example": 1234
+      },
+      "title": {
+        "type": "string",
+        "description": "Identificador de producto",
+        "example": "Título"
+      },
+      "author" : {
+        "type" : "object",
+        "description": "Autor de API",
+        "properties" : {
+          "name": {
+            "type": "string",
+            "description": "Nombre del autor"
+          },
+          "lastname": {
+            "type": "string",
+            "description": "Apellido del autor"
+          }
+        }
+      },
+      "price": {
+        "type": "object",
+        "description": "Precio de producto",
+        "properties": {
+          "currency": {
+            "type": "string",
+            "description": "Identificador de moneda"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "Importe del producto"
+          },
+          "decimals": {
+            "type": "integer",
+            "description": "Cantidad de decimales del importe del producto"
+          }
+        }
+      },
+      "picture": {
+        "type": "string",
+        "description": "Imagen de producto",
+        "example": "http://url.jpg"
+      },
+      "condition": {
+        "type": "string",
+        "description": "Condición del producto",
+        "example": "Nuevo"
+      },
+      "free_shipping": {
+        "type": "boolean",
+        "description": "Indica si el producto tiene envío gratuito",
+        "example": false
+      },
+      "item": {
+        "type": "object",
+        "properties": {
+          "id": {"$ref": "#/components/schemas/id"},
+          "title": {"$ref": "#/components/schemas/title"},
+          "price": {"$ref": "#/components/schemas/price"},
+          "picture": {"$ref": "#/components/schemas/picture"},
+          "condition": {"$ref": "#/components/schemas/condition"},
+          "free_shipping": {"$ref": "#/components/schemas/free_shipping"}
+        }
+      },
+      "itemDetail": {
+        "type": "object",
+        "properties": {
+          "id": {"$ref": "#/components/schemas/id"},
+          "title": {"$ref": "#/components/schemas/title"},
+          "price": {"$ref": "#/components/schemas/price"},
+          "picture": {"$ref": "#/components/schemas/picture"},
+          "condition": {"$ref": "#/components/schemas/condition"},
+          "free_shipping": {"$ref": "#/components/schemas/free_shipping"},
+          "sold_quantity": {
+            "type": "integer",
+            "description": "Cantidad vendida del producto"
+          },
+          "description": {
+            "type": "string",
+            "description": "Descripción del producto"
+          }
+        }
+      },
+      "error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
