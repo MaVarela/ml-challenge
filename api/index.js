@@ -3,7 +3,7 @@ const axios = require("axios");
 const app = express();
 const swaggerUi = require("swagger-ui-express");
 const openApiDocumentation = require("./api-docs.json");
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const decimalCount = (num) => {
   const numStr = String(num);
