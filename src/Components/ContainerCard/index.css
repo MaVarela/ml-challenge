@@ -1,0 +1,53 @@
+.paper {
+  padding: 2;
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+  width: 100%
+}
+
+.fixedHeight {
+  height: 100vh
+}
+
+.marginTitle {
+  margin-right: 0%;
+  margin-left: 25%!important;
+  display: flex!important;
+  flex-direction: row;
+  flex: .25;
+  margin-top: 5%;
+  font-size: 30pt;
+  text-align: left;
+}
+
+.wrapper {
+  margin-top: 50;
+  position: relative;
+}
+
+.imageContainer {
+  height: 100%;
+  flex-direction: row;
+  display: flex;
+  flex: .10;
+  overflow: auto;
+  padding: 1%;
+}
+
+.cardText {
+  flex-direction: row;
+  display: flex;
+  flex: .25;
+  font-weight: 600;
+  font-size: large;
+  margin-top: 2%;
+  margin-left: 2%;
+}
+
+@supports(object-fit: cover){
+  .imageContainer img{
+    height: 100%;
+    object-fit: contain;
+  }
+}

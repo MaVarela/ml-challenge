@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+import { Route } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Header from './Components/Header/index';
+import ContainerCard from './Components/ContainerCard/index';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="root">
+        <AppBar position="absolute" className="header">
+          <Toolbar className="toolbar">
+            <Header />
+          </Toolbar>
+        </AppBar>
+        <main className="content">
+          <Container className="container">
+            <Route path="/" exact component={ContainerCard} />
+            {/* <Route path="/items" component={Autorizacion} /> */}
+          </Container>
+        </main>
+      </div>
     </div>
   );
 }
