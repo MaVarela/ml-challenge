@@ -1,17 +1,19 @@
 const express = require("express");
+var cors = require('cors');
 const axios = require("axios");
 const app = express();
 const swaggerUi = require("swagger-ui-express");
 const openApiDocumentation = require("./api-docs.json");
 const PORT = process.env.PORT || 3001;
 
-const decimalCount = (num) => {
+const extractDecimalOrInteger = (num, integer) => {
   const numStr = String(num);
 
-  if (numStr.includes(".")) {
-    return numStr.split(".")[1].length;
+  if (!integer) {
+    var number = numStr.split(".")[1];
+    return number != undefined ? Number(numStr.split(".")[1]) : 0;
   }
-  return 0;
+  return Number(numStr.split(".")[0]);
 };
 const agregarFirma = () => {
   return (req, res, next) => {
@@ -36,16 +38,17 @@ const agregarFirma = () => {
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors());
 app.use(agregarFirma());
 
 /*
   Endpoint para obtención de listado de items
 */
 app.route("/api/items").get((req, res) => {
-  let { q } = req.query;
+  let { search } = req.query;
 
   axios
-    .get(`https://api.mercadolibre.com/sites/MLA/search?q=${q}`)
+    .get(`https://api.mercadolibre.com/sites/MLA/search?q=${search}`)
     .then((response) => {
       var result = {
         categories: response.data.results.map((x) => x.category_id),
@@ -55,8 +58,8 @@ app.route("/api/items").get((req, res) => {
             title: x.title,
             price: {
               currency: x.currency_id,
-              amount: x.price,
-              decimals: decimalCount(x.price),
+              amount: extractDecimalOrInteger(x.price, true),
+              decimals: extractDecimalOrInteger(x.price, false),
             },
             picture: x.thumbnail,
             condition: x.condition,
@@ -91,8 +94,8 @@ app.route("/api/items/:id").get((req, res) => {
           title: response.data.title,
           price: {
             currency: response.data.currency_id,
-            amount: response.data.price,
-            decimals: decimalCount(response.data.price),
+            amount: extractDecimalOrInteger(response.data.price, true),
+            decimals: extractDecimalOrInteger(response.data.price, false),
           },
           picture: response.data.thumbnail,
           condition: response.data.condition,

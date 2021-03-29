@@ -3,7 +3,8 @@ import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Header from './Components/Header/index';
-import ContainerCard from './Components/ContainerCard/index';
+import ItemsList from './Components/Items/List/index';
+import ItemDetail from './Components/Items/Detail/index';
 import './App.css';
 
 function App() {
@@ -17,8 +18,8 @@ function App() {
         </AppBar>
         <main className="content">
           <Container className="container">
-            <Route path="/" exact component={ContainerCard} />
-            {/* <Route path="/items" component={Autorizacion} /> */}
+            <Route path="/items" exact component={ItemsList} />
+            <Route path="/items/:id" component={ItemDetail} />
           </Container>
         </main>
       </div>

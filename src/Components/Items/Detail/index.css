@@ -1,0 +1,91 @@
+.detailContainer {
+  height: 100%;
+  margin-bottom: .1%;
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+}
+
+.imageContainer {
+  height: 95%;
+  flex-direction: row;
+  display: flex;
+  flex: 1;
+  overflow: auto;
+  padding: .4% 1%;
+  box-sizing: content-box;
+}
+
+.cardText {
+  font-weight: 600;
+  font-size: large;
+}
+
+.cardDescription {
+  font-weight: normal;
+  font-size: .9vw;
+}
+
+.middleContainer {
+  padding-top: 2%;
+  flex-direction: column;
+  display: flex;
+  flex: .6;
+  justify-content: flex-start;
+  text-align: initial;
+}
+
+.bottomContainer {
+  text-align: left;
+  padding: 1%;
+  width: 90%;
+}
+
+.bottomContainer .cardText {
+  font-weight: normal;
+}
+
+.priceContainer {
+  flex-direction: row;
+  display: flex;
+}
+
+.cardTextCondition {
+  font-size: medium;
+  opacity: .6;
+}
+
+.cardTextXXLarge {
+  font-size: xx-large;
+}
+
+.detailTop {
+  flex-direction: row;
+  display: flex;
+  height: 55%
+}
+
+.detailBottom {
+  flex-direction: row;
+  display: flex;
+  height: auto;
+  padding-bottom: 1%;
+}
+
+.cardTextPriceDecimals {
+  font-size: large;
+  margin-top: 2%;
+  margin-left: 1%;
+}
+
+@supports(object-fit: cover){
+  .imageContainer img{
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.buyButton {
+  height: 5vh;
+  width: 50vh;
+}

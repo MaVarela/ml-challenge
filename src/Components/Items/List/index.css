@@ -1,0 +1,62 @@
+.cardContainer {
+  height: 24.8%;
+  margin-bottom: .1%;
+  flex: 1;
+  flex-direction: row;
+  display: flex;
+}
+
+.cursorPointer:hover {
+  cursor:pointer;
+}
+
+.imageContainerList {
+  height: 95%;
+  flex-direction: row;
+  display: flex;
+  flex: .15;
+  overflow: hidden;
+  padding: .4% 1%;
+  box-sizing: content-box;
+}
+
+.cardTextList {
+  font-weight: 600;
+  font-size: x-large;
+}
+
+.cardTextListTitle {
+  font-weight: 600;
+  font-size: large;
+}
+
+.middleContainer {
+  padding-top: 2%;
+  padding-left: 2%;
+  flex-direction: column;
+  display: flex;
+  flex: .6;
+  justify-content: flex-start;
+  text-align: initial;
+}
+
+.rightContainer {
+  padding-top: 5%;
+  flex-direction: column;
+  display: flex;
+  flex: .25;
+  justify-content: flex-start;
+  text-align: initial;
+}
+
+.cardTextShipping {
+  font-size: medium;
+  opacity: .6;
+}
+
+@supports(object-fit: contain){
+  .imageContainer img{
+    height: 100%;
+    object-fit: contain;
+  }
+}
