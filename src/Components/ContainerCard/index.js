@@ -8,7 +8,7 @@ function ContainerCard(props) {
   return (
     <Grid container spacing={5}>
       <Grid item xs={12} md={8} lg={12}>
-        <Card className={"fixedHeight"} style={{ paddingLeft: 5, paddingRight: 5, flex: 1 }}>
+        <Card className={"mainContainer"}>
           {props.children}          
         </Card>
       </Grid>

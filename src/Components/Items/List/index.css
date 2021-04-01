@@ -1,13 +1,17 @@
 .cardContainer {
-  height: 24.8%;
-  margin-bottom: .1%;
+  height: 25%;
+  margin-bottom: 0px;
   flex: 1;
   flex-direction: row;
   display: flex;
+  border-radius: 0px!important;
+  border-bottom: thin solid #eee;
 }
 
 .cursorPointer:hover {
   cursor:pointer;
+  background-color:lightgray;
+  opacity: .4;
 }
 
 .imageContainerList {

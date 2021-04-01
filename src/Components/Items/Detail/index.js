@@ -1,39 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import ContainerCard from "../../ContainerCard/index";
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux'
+import { getProducto } from '../../../state/actions';
 import { useParams } from "react-router-dom";
 import './index.css';
 
-function ItemDetail() {
+function ItemDetail(props) {
   const [item, setItem] = useState(null);
   const [param, setParam] = useState(null);
   let { id } = useParams();
 
-
-  const getDetail = async (id) => {
-    if (id != null) {
-      let url = 'http://localhost:3001/api/items/' + id;
-      fetch(url)
-        .catch((error) => {
-
-        })
-        .then(response => response.json())
-        .then(json => {
-          if (json.item != undefined)
-            setItem(json.item);
-        });
-    }
-  };
-
   useEffect(() => {
-    if (id != null && id != undefined) {
+    if (id !== null && id !== undefined) {
       setParam(id)
     }
-  })
+  }, [id])
 
-  useEffect(async () => {
+  useEffect(() => {
+    const updateItems = () => {
+      setItem(props.result?.item);
+    }
+    return updateItems();
+  }, [props.result])
+
+  useEffect(() => {
     const getItem = async () => {
-      await getDetail(param);
+      setItem(null);
+      if(param !== null)
+        await props.getProducto(param);
     }
     return getItem();
   }, [param]);
@@ -70,4 +65,11 @@ function ItemDetail() {
   );
 }
 
-export default ItemDetail;
+const mapStateToProps = state => ({
+  result: state.producto
+})
+const mapDispatchToProps = dispatch => ({
+  getProducto: (id) => dispatch(getProducto(id))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemDetail);

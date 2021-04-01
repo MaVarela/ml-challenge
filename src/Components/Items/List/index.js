@@ -2,53 +2,64 @@ import React, { useState, useEffect } from 'react';
 import ContainerCard from "../../ContainerCard/index";
 import Card from '@material-ui/core/Card';
 import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux'
+import { getListaProductos, getBreadcrumb, setBreadcrumb } from '../../../state/actions';
 import './index.css';
 
-function ItemsList() {
+function ItemsList(props) {
 
   let history = useHistory();
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(props.result?.items);
   const [query, setQuery] = useState("");
 
-  const searchProducts = async (text) => {
-    let url = 'http://localhost:3001/api/items?search=' + text;
-    fetch(url)
-      .catch((error) => {
-
-      })
-      .then(response => response.json())
-      .then(json => {
-        if (json.items != undefined)
-          setItems(json.items);
-      });
-  };
-
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    let queryParams = {
-      search: query.get('search')
-    };
-    if (queryParams.search !== '' && queryParams.search !== null) {
-      setQuery(queryParams.search)
+    const onChangeQuery = () => {
+      const query = new URLSearchParams(window.location.search);
+      let queryParams = {
+        search: query.get('search')
+      };
+      if (queryParams.search !== '' && queryParams.search !== null) {
+        setQuery(queryParams.search)
+      }
     }
+    return onChangeQuery();
   })
 
-  useEffect(async () => {
+  useEffect(() => {
     const getItems = async () => {
-      await searchProducts(query);
+      setItems([]);
+      await props.getListaProductos(query);
     }
     return getItems();
   }, [query]);
 
-  const handleClick = (id) => {
+  useEffect(() => {
+    const updateItems = () => {
+      if (props.result !== null && props.result !== undefined) {
+        setItems(props.result?.items);
+        if (props.result.categories?.length > 0) {
+          props.getBreadcrumb(props.result?.categories[0]);
+        }
+        else {
+          props.setBreadcrumb([]);
+        }
+      }
+      else
+        props.setBreadcrumb([]);
+    }
+    return updateItems();
+  }, [props.result]);
+
+  const handleClick = (id, index) => {
+    props.getBreadcrumb(props.result?.categories[index]);
     history.push("/items/" + id);
   }
 
   return (
     <ContainerCard>
-      {items.length > 0 ? items.slice(0, 4).map((x, i) => {
+      {items !== undefined && items.length > 0 ? items.slice(0, 4).map((x, i) => {
         return (
-          <Card key={x.id} className="cardContainer cursorPointer" onClick={() => handleClick(x.id)}>
+          <Card key={x.id} className="cardContainer cursorPointer" onClick={() => handleClick(x.id, i)}>
             <div className={"imageContainerList"} >
               <img src={x.picture}></img>
             </div>
@@ -66,4 +77,14 @@ function ItemsList() {
   );
 }
 
-export default ItemsList;
+const mapStateToProps = state => ({
+  result: state.productos,
+  categoria: state.categoria
+})
+const mapDispatchToProps = dispatch => ({
+  getListaProductos: (texto) => dispatch(getListaProductos(texto)),
+  getBreadcrumb: (id) => dispatch(getBreadcrumb(id)),
+  setBreadcrumb: (lista) => dispatch(setBreadcrumb(lista)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemsList);

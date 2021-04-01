@@ -6,8 +6,10 @@
   width: 100%
 }
 
-.fixedHeight {
+.mainContainer {
   height: 100vh;
+  padding: 0px;
+  flex: 1;
 }
 
 .marginTitle {

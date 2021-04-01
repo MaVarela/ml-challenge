@@ -30,7 +30,7 @@ function Header() {
 
   return (
     <InputGroup className="searchContainer">
-      <a className="logo"></a>
+      <a className="logo" href="/"></a>
       <FormControl
         placeholder="Buscar"
         aria-label="Buscar"

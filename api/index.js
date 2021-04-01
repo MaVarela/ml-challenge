@@ -46,9 +46,10 @@ app.use(agregarFirma());
 */
 app.route("/api/items").get((req, res) => {
   let { search } = req.query;
+  let param = search.replace(/[^\w\s]/gi, '');
 
   axios
-    .get(`https://api.mercadolibre.com/sites/MLA/search?q=${search}`)
+    .get("https://api.mercadolibre.com/sites/MLA/search?q=" + param)
     .then((response) => {
       var result = {
         categories: response.data.results.map((x) => x.category_id),
@@ -113,10 +114,34 @@ app.route("/api/items/:id").get((req, res) => {
           });
         })
         .catch((error) => {
-          res.status(400).send({
-            message: `Error ${error}`,
+          res.status(200).send({
+            ...result
           });
         });
+    })
+    .catch((error) => {
+      res.status(400).send({
+        message: `Error ${error}`,
+      });
+    });
+});
+
+/*
+  Endpoint para obtención una categoría
+*/
+app.route("/api/category/:id").get((req, res) => {
+  let { id } = req.params;
+
+  axios
+    .get(`https://api.mercadolibre.com/categories/${id}`)
+    .then((response) => {
+      var result = {
+        categories: response.data.path_from_root.map((x) => x.name)
+      };
+
+      res.status(200).send({
+        ...result,
+      });
     })
     .catch((error) => {
       res.status(400).send({
