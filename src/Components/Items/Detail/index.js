@@ -13,7 +13,7 @@ Renderiza el detalle de un producto
 function ItemDetail(props) {
   const [item, setItem] = useState(null);
   const [param, setParam] = useState(null);
-  const { getProducto } = props;
+  const { getProducto, result } = props;
   let { id } = useParams();
 
   useEffect(() => {
@@ -24,10 +24,10 @@ function ItemDetail(props) {
 
   useEffect(() => {
     const updateItems = () => {
-      setItem(props.result?.item);
+      setItem(result?.item);
     };
     return updateItems();
-  }, [props.result]);
+  }, [result]);
 
   useEffect(() => {
     const getItem = async () => {
