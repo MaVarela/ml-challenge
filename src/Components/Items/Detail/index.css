@@ -88,4 +88,7 @@
 .buyButton {
   height: 5vh;
   width: 50vh;
+  text-transform: none!important;
+  font-size: 100%!important;
+  font-weight: bold!important;
 }

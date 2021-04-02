@@ -1,5 +1,5 @@
 const express = require("express");
-var cors = require('cors');
+var cors = require("cors");
 const axios = require("axios");
 const app = express();
 const swaggerUi = require("swagger-ui-express");
@@ -11,7 +11,7 @@ const extractDecimalOrInteger = (num, integer) => {
 
   if (!integer) {
     var number = numStr.split(".")[1];
-    return number != undefined ? Number(numStr.split(".")[1]) : 0;
+    return number !== undefined ? Number(numStr.split(".")[1]) : 0;
   }
   return Number(numStr.split(".")[0]);
 };
@@ -46,10 +46,13 @@ app.use(agregarFirma());
 */
 app.route("/api/items").get((req, res) => {
   let { search } = req.query;
-  let param = search.replace(/[^\w\s]/gi, '');
 
   axios
-    .get("https://api.mercadolibre.com/sites/MLA/search?q=" + param)
+    .get("https://api.mercadolibre.com/sites/MLA/search", {
+      params: {
+        q: search,
+      },
+    })
     .then((response) => {
       var result = {
         categories: response.data.results.map((x) => x.category_id),
@@ -110,13 +113,19 @@ app.route("/api/items/:id").get((req, res) => {
         .then((response) => {
           result.item.description = response.data.plain_text;
           res.status(200).send({
-            ...result
+            ...result,
           });
         })
         .catch((error) => {
-          res.status(200).send({
-            ...result
-          });
+          if (error.response.status === 404) {
+            res.status(200).send({
+              ...result,
+            });
+          } else {
+            res.status(400).send({
+              message: `Error ${error}`,
+            });
+          }
         });
     })
     .catch((error) => {
@@ -136,7 +145,7 @@ app.route("/api/category/:id").get((req, res) => {
     .get(`https://api.mercadolibre.com/categories/${id}`)
     .then((response) => {
       var result = {
-        categories: response.data.path_from_root.map((x) => x.name)
+        categories: response.data.path_from_root.map((x) => x.name),
       };
 
       res.status(200).send({
@@ -150,6 +159,9 @@ app.route("/api/category/:id").get((req, res) => {
     });
 });
 
+/*
+  Endpoint para acceder a la documentación
+*/
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 
 app.listen(PORT, () => {

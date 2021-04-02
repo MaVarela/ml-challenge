@@ -29,3 +29,13 @@
   margin-top: 5%;
   width: 80%!important;
 }
+
+.top {
+  color: #1a90ff;
+  animation-duration: 550ms;
+  margin-top: 25%;
+}
+
+.circle {
+  stroke-linecap: round
+}

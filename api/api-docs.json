@@ -102,6 +102,56 @@
           }
         }
       }
+    },
+    "/api/category/{id}": {
+      "get": {
+        "tags": ["Listado de categorías"],
+        "description": "Retorna el breadcrumb de una categoría",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado de categorías",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "author": {"$ref": "#/components/schemas/author"},
+                    "categories" : {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "example": {
+                  "message": "Mensaje de error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
