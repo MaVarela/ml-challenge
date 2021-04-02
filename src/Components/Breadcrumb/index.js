@@ -4,6 +4,9 @@ import Link from '@material-ui/core/Link';
 import { connect } from 'react-redux'
 import './index.css';
 
+/*
+Renderiza un breadcrumb
+*/
 function Breadcrumb(props) {
 
   const [categoria, setCategoria] = useState(null);

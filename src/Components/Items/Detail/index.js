@@ -7,6 +7,9 @@ import { getProducto } from "../../../state/actions";
 import { useParams } from "react-router-dom";
 import "./index.css";
 
+/*
+Renderiza el detalle de un producto
+*/
 function ItemDetail(props) {
   const [item, setItem] = useState(null);
   const [param, setParam] = useState(null);

@@ -6,6 +6,9 @@ import Button from 'react-bootstrap/Button';
 import { useHistory } from "react-router-dom";
 import './index.css';
 
+/*
+Renderiza una cabecera
+*/
 function Header() {
 
   const [searchText, setSearchText] = useState("");
@@ -34,7 +37,7 @@ function Header() {
       <FormControl
         placeholder="Buscar"
         aria-label="Buscar"
-        className="searchBox form-control"
+        className="searchBox"
         onChange={handleChangeText}
         onKeyDown={handleKeyDown}
       />

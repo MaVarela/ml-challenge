@@ -26,7 +26,7 @@
   flex: 1
 }
 
-.form-control:focus {
+.searchBox:focus {
   border-color: transparent;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(255, 252, 100, 0.26);
 }

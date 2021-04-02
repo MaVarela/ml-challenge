@@ -11,6 +11,9 @@ import {
 } from "../../../state/actions";
 import "./index.css";
 
+/*
+Renderiza un listado de productos
+*/
 function ItemsList(props) {
   let history = useHistory();
   const [items, setItems] = useState(props.result?.items);
