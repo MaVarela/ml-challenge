@@ -6,6 +6,7 @@
   display: flex;
   border-radius: 0px!important;
   border-bottom: thin solid #eee;
+  padding: .5%;
 }
 
 .cursorPointer:hover {
