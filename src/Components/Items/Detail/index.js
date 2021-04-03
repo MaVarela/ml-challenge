@@ -38,7 +38,7 @@ function ItemDetail(props) {
   }, [param, getProducto]);
 
   return (
-    <ContainerCard>
+    <ContainerCard className="detailMainContainer">
       {item != null ? (
         <div className="detailContainer">
           <div className="detailTop">

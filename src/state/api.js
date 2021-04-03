@@ -1,15 +1,15 @@
-import axios from 'axios'
+import axios from "axios";
 
-const URL = 'http://localhost:3001/api';
+const URL = process.env.REACT_APP_API_URL;
 
 export const getProductos = (texto) => {
-    return axios(URL + "/items?search=" + texto);
-}
+  return axios(URL + "/items?search=" + texto);
+};
 
-export const getDetalleProducto = id => {
-    return axios(URL + '/items/' + id);
-}
+export const getDetalleProducto = (id) => {
+  return axios(URL + "/items/" + id);
+};
 
-export const getCategoria = id => {
-    return axios(URL + '/category/' + id);
-}
+export const getCategoria = (id) => {
+  return axios(URL + "/category/" + id);
+};
